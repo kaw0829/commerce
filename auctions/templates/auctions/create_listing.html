@@ -1,0 +1,9 @@
+{% extends 'auctions/layout.html' %}
+
+{% block body %}
+<form method='POST' enctype="multipart/form-data">
+{% csrf_token %}
+{{ add_listing_form.as_p }}
+<button type='submit'>Save Entry</button>
+</form>
+{% endblock body %}
