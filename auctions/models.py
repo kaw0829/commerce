@@ -40,14 +40,22 @@ class Listing(models.Model):
         HOME = 'HOM', _('Home')
         ART = 'ART', _('Art')
         LITERATURE = 'LIT', _('Literature')
-
-    listing_id = models.AutoField(primary_key=True)
-    listing_cat = models.CharField(max_length=20, choices=Categories.choices, default=Categories.HOME)
-    #listing_id = models.IntegerField(primary_key=True, auto_created=True)
+        # FASHION = _('Fashion')
+        # TOYS =  _('Toys')
+        # ELECTRONICS = _('Electronics')
+        # HOME = _('Home')
+        # ART = _('Art')
+        # LITERATURE = 'LIT', _('Literature')
+    listing_id   = models.AutoField(primary_key=True)
+    listing_cat  = models.CharField(max_length=20, choices=Categories.choices, default=Categories.HOME)
+    #listing_id  = models.IntegerField(primary_key=True, auto_created=True)
     listing_name = models.CharField(max_length=100)
-    description = models.CharField(max_length=200, default="please provide a description")
-    close_date = models.DateTimeField(default=now_plus_7())
-    listing_img = models.ImageField(upload_to='images/', null=True, blank=True)
+    description  = models.CharField(max_length=200, default="please provide a description")
+    close_date   = models.DateTimeField(default=now_plus_7())
+    starting_bid = models.DecimalField(max_digits=8, decimal_places=2, default=0.00)
+    listing_img  = models.ImageField(upload_to='images/', null=True, blank=True)
+    #used instead of objects to access data in db of this model
+    listings = models.Manager()
 
     def __str__(self): 
         return self.listing_name
@@ -56,7 +64,7 @@ class Bid(models.Model):
     username = models.ForeignKey(User, on_delete=models.CASCADE)
     amount_bid = models.DecimalField(max_digits=8, decimal_places=2)
     listing_id = models.ForeignKey(Listing, on_delete=models.CASCADE)
-    
+    bids = models.Manager()
     def __str__(self): 
         return f"User:{self.username} bids {self.amount_bid} on item no: {self.listing_id}."
 

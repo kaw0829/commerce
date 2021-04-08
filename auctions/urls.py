@@ -2,7 +2,7 @@ from django.urls import path
 from django.conf import settings
 from django.conf.urls.static import static
 
-from .import views
+from . import views
 
 urlpatterns = [
     path("", views.index, name="index"),
@@ -10,7 +10,11 @@ urlpatterns = [
     path("logout", views.logout_view, name="logout"),
     path("register", views.register, name="register"),
     path("create_listing", views.create_listing, name="add_listing"),
-    path('success', views.success, name = 'success')
+    path('success', views.success, name = 'success'),
+    path('listing/<title>', views.listing, name='listing'),
+    path("categories", views.categories, name='categories'),
+    path("<cat>", views.category, name='category')
+   
 ]
 
 if settings.DEBUG:

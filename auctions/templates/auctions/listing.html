@@ -1,0 +1,25 @@
+{% extends 'auctions/layout.html' %}
+
+{% block body %}
+
+    <p>
+        {{ listing }} {{listing.listing_cat}} {{listing.description }} {{ listing.close_date }}
+    </p>
+        {% if listing.listing_img != Null %}
+            <img src="{{media_url}}{{listing.listing_img}}" width="300" alt="auction image">
+        {% endif %} 
+        {% if user.is_authenticated %}
+       
+            <form method="POST">
+                {% csrf_token %} 
+                {{ bid_form }}
+                <button type="submit">submit bid</button>
+            </form>
+        
+            {{ previous_bids.as_p}}
+        {% endif %}
+        {%for bid in previous_bids %}
+            <p>{{bid}}</p>
+        {% endfor %}
+    </p>
+{% endblock body %}
