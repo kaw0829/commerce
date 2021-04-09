@@ -10,7 +10,20 @@ from django.dispatch import receiver
 
 # ... models code goes here ...
 
+# Using ManyToManyField relations and properties:
 
+# class MyDjangoClass(models.Model):
+#     name = models.CharField(...)
+#     friends = models.ManyToManyField("self")
+
+#     @property
+#     def friendlist(self):
+#         # Watch for large querysets: it loads everything in memory
+#         return list(self.friends.all())
+# You can access a user's friend list this way:
+
+# joseph = MyDjangoClass.objects.get(name="Joseph")
+# friends_of_joseph = joseph.friendlist
 
 #if class added must run python manage.py makemigrations
 # then run python manage.py migrate
@@ -56,9 +69,10 @@ class Listing(models.Model):
     listing_img  = models.ImageField(upload_to='images/', null=True, blank=True)
     #used instead of objects to access data in db of this model
     listings = models.Manager()
+    users_watching = models.ManyToManyField(User)
 
     def __str__(self): 
-        return self.listing_name
+       return self.listing_name
 
 class Bid(models.Model): 
     username = models.ForeignKey(User, on_delete=models.CASCADE)
